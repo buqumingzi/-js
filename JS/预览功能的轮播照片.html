@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			img{
+				border: 0;
+			}
+			li{
+				list-style: none;
+			}
+			body{
+				max-width: 1920px;
+				max-height:879px;
+				background: url(img/body_bg.jpg) no-repeat;
+			}
+			#box{
+				width: 800px;
+				height: 600px;
+				/*border: 1px solid black;*/
+				margin: 100px auto 0 auto;
+				position: relative;
+			}
+			#box ul{
+				position: absolute;
+				bottom: 10px;
+				left: 350px;
+			}
+			#box li{
+				width: 10px;
+				height: 10px;
+				border-radius: 50%;
+				display: inline-block;
+				background: blueviolet;
+				cursor: pointer;
+				position: relative;
+				margin-left: 5px;
+			}
+			#box span{
+				display: block;
+				width: 50px;
+				height: 50px;
+				background:#e59f5c;
+				border-radius: 50%;
+				font-size: 40px;
+				line-height: 50px;
+				font-weight: bolder;
+				text-align: center;
+				color: white;
+				position: absolute;
+				cursor: pointer;
+			}
+			#box span:nth-child(2){
+				left: 0;
+				top: 250px;
+			}
+			#box span:nth-child(3){
+				top: 250px;
+				right: 0;
+			}
+			/*#box li:active{
+				background: black;
+			}*/
+			
+			#box ul li img{
+				position: absolute;
+				top: -45px;
+				left: -15px;
+				display: none;
+			}
+			
+		</style>
+		<script type="text/javascript">
+			window.onload=function(){
+				//获取元素
+					var oDiv=document.getElementById("box");
+					var oPre=oDiv.getElementsByTagName("span")[0];
+					var oNext=oDiv.getElementsByTagName("span")[1];
+					var aLi=oDiv.getElementsByTagName("li");
+					var aimg=oDiv.getElementsByTagName('img');
+					
+				//用于获取数字
+					var num=1;
+				//初始化
+					oDiv.style.background="url(img/"+num+".jpg) no-repeat";
+					aLi[num-1].style.backgroundColor="black";
+				//下一步点击事件
+					oNext.onclick=function(){
+						
+						if(num>aLi.length-1){
+							num=1
+						}else{
+							num++;
+						}
+						oDiv.style.background="url(img/"+num+".jpg) no-repeat";
+						clearLi();
+						aLi[num-1].style.backgroundColor="black";
+						
+					
+				}
+				
+					
+				//上一步点击事件
+					oPre.onclick=function(){
+						if(num<2){
+							num=aLi.length;
+						}else{
+							num--;
+						}
+						oDiv.style.background="url(img/"+num+".jpg) no-repeat";
+						clearLi();
+						aLi[num-1].style.backgroundColor="black";
+					}
+					
+					//清理li的点击颜色
+					function clearLi(){
+						for(var i=0;i<aLi.length;i++){
+							aLi[i].style.background="";
+						}
+					}
+					
+					//添加点击事件以及鼠标移入移出事件
+					for(var i=0;i<aLi.length;i++){
+						aLi[i].index=i;
+						aLi[i].onclick=function(){
+							clearLi();
+							this.style.backgroundColor="black";
+							oDiv.style.background="url(img/"+(this.index+1)+".jpg) no-repeat";
+						}
+						
+						aLi[i].onmouseover=function(){
+							aimg[this.index].style.display="block";
+						}
+						aLi[i].onmouseout=function(){
+							aimg[this.index].style.display="none";
+						}
+					}
+							
+					//定时器事件
+					var timer=null;
+					function paytime(){
+						timer=setInterval(function(){
+						oNext.click();
+					},2000)
+					}
+					paytime();
+					
+					oDiv.onmouseover=function(){
+						clearInterval(timer);
+					}
+					oDiv.onmouseout=function(){
+						paytime();
+					}
+
+			}
+		</script>
+	</head>
+	<body>
+		<div id="box">
+			<ul>
+				<li>
+					<img src="img/1_1.png"/>
+				</li>
+				<li>
+					<img src="img/2_2.png"/>
+				</li>
+				<li>
+					<img src="img/3_3.png"/>
+				</li>
+				<li>
+					<img src="img/4_4.png"/>
+				</li>
+				<li>
+					<img src="img/5_5.png"/>
+				</li>
+			</ul>
+			<span><</span>
+			<span>></span>
+		</div>
+	</body>
+</html>
