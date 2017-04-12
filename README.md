@@ -1,1 +1,1 @@
-# -jssdvsdvsdvs
+# -js使用原生js编写的具有预览功能的轮播图，只要使用的index
